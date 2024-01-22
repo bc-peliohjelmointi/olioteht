@@ -71,6 +71,7 @@ else if (örkkiHp <= 0)
 
 int ArvoVahinko(int minimi, int maksimi)
 {
+    
     return generaattori.Next(minimi, maksimi+1);
 }
 
