@@ -1,20 +1,26 @@
 ﻿using System;
 
-int ritariHp = 30;
-int örkkiHp = 30;
+int ritariHp = 50;
+int orkkiHp = 60;
 Random generaattori = new Random();
 
-Console.WriteLine("Tervetuloa armas ritarimmme autattehan meitä päihittämään tämän suuren pahan örkin");
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine("Tervetuloa armas ritarimmme autattehan meitä pelastamaan kylämme tältä pahalta örkiltä");
+Console.ForegroundColor = ConsoleColor.White;
 
 
-
-while (örkkiHp > 0 && ritariHp > 0)
+while (orkkiHp > 0 && ritariHp > 0)
 {
 
     Console.WriteLine("-----------------------------------------------------------------------------------------");
 
-    Console.WriteLine("pelaaja HP " + ritariHp);
-    Console.WriteLine("vastustaja HP " + örkkiHp);
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("Ritari HP " + ritariHp);
+    Console.ForegroundColor = ConsoleColor.White;
+
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("Örkki HP " + orkkiHp);
+    Console.ForegroundColor = ConsoleColor.White;
 
     Console.WriteLine("1: Hyökkää");
     Console.WriteLine("2: Puolusta");
@@ -38,23 +44,30 @@ while (örkkiHp > 0 && ritariHp > 0)
     if (komentoNumero == 1)
     {
         // Attac
-        int vahinkoPisteet = ArvoVahinko(1, 6);
-        örkkiHp -= vahinkoPisteet;
-        Console.WriteLine("Hyökkäät örkin kimppuun");
+        int vahinkoPisteet = ArvoVahinko(3, 8);
+        orkkiHp -= vahinkoPisteet;
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("Hyökkäät örkin kimppuun ja teit"  + " " + vahinkoPisteet + " " + "vahinko pistettä");
+        Console.ForegroundColor = ConsoleColor.White;
     }
     else
     {
         //protect
+        Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Puolustaudut örkin iskua vastaan");
+        Console.ForegroundColor = ConsoleColor.White;
     }
 
-    int örkkiVahinko = ArvoVahinko(1, 6);
+    int orkkiVahinko = ArvoVahinko(3, 6);
     {
         if (komentoNumero == 2)
-        {
-            örkkiVahinko /= 2;
+        {           
+            orkkiVahinko /= 2;
         }
-        ritariHp -= örkkiVahinko;
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("örkki hyökkää kimppuusi ja tekee" + " " + orkkiVahinko + " " + "vahinko pistettä");
+        ritariHp -= orkkiVahinko;
+        Console.ForegroundColor = ConsoleColor.White;
     }
 
     
@@ -62,12 +75,21 @@ while (örkkiHp > 0 && ritariHp > 0)
 
 if (ritariHp <= 0)
 {
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("-----------------------------------------------------------------------------------------");
+    Console.WriteLine();
     Console.WriteLine("Sinut päihitettiin.");
+    Console.ForegroundColor = ConsoleColor.White;
 }
-else if (örkkiHp <= 0)
+else if (orkkiHp <= 0)
 {
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("-----------------------------------------------------------------------------------------");
+    Console.WriteLine();
     Console.WriteLine("Päihitit örkin.");
+    Console.ForegroundColor = ConsoleColor.White;
 }
+
 
 int ArvoVahinko(int minimi, int maksimi)
 {
