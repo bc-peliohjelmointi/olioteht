@@ -61,6 +61,9 @@
             }
             Nuoli uusinuoli = new Nuoli(valittukärki, valittusulka, valittupituus);
             Console.WriteLine("Ostit nuolen jonka hinta on " + uusinuoli.Laskehinta());
+            Console.WriteLine("nuolen kärki on " + uusinuoli.GetKärkiosa());
+            Console.WriteLine("nuolen sulka on " + uusinuoli.GetNuolensulka());
+            Console.WriteLine("nuolen pituus on " + uusinuoli.Getpituus());
         }
     }
 
@@ -90,6 +93,20 @@
             this.pituusCm = pituusCm;
         }
 
+        public Nuolenkärki GetKärkiosa()
+        {
+            return kärkiOsa;
+        }
+        
+        public Nuolensulka GetNuolensulka()
+        {
+            return sulkaOsa;
+        }
+        public int Getpituus()
+        {
+            return pituusCm;
+        }
+       
         public float Laskehinta()
         {
             float hinta = 0;
