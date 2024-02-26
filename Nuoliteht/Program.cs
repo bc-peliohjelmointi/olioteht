@@ -16,7 +16,7 @@
 
             while (true)
             {
-                Console.WriteLine("Millainen kärki? (puu, teräs, timantti");
+                Console.WriteLine("Millainen kärki? (puu, teräs, timantti)");
                 string kärkivastaus = Console.ReadLine();
                if (Enum.TryParse<Nuolenkärki>(kärkivastaus, out valittukärki))
                 {
@@ -55,15 +55,15 @@
                     }
                     else
                     {
-                        Console.WriteLine("Pituus ei ole mahdollinen");
+                        Console.WriteLine("Tämä ei ole mahdollinen");
                     }
                 }
             }
             Nuoli uusinuoli = new Nuoli(valittukärki, valittusulka, valittupituus);
-            Console.WriteLine("Ostit nuolen jonka hinta on " + uusinuoli.Laskehinta());
-            Console.WriteLine("nuolen kärki on " + uusinuoli.GetKärkiosa());
-            Console.WriteLine("nuolen sulka on " + uusinuoli.GetNuolensulka());
-            Console.WriteLine("nuolen pituus on " + uusinuoli.Getpituus());
+            Console.WriteLine("Ostit nuolen jonka hinta on " + uusinuoli.Laskehinta()+ " kultaa");
+            Console.WriteLine("nuolen kärki on " + uusinuoli.Kärkiosa);
+            Console.WriteLine("nuolen sulka on " + uusinuoli.Nuolensulka);
+            Console.WriteLine("nuolen pituus on " + uusinuoli.pituus);
         }
     }
 
@@ -83,61 +83,64 @@
 
     public class Nuoli
     {
-        Nuolenkärki kärkiOsa;
-        Nuolensulka sulkaOsa;
-        int pituusCm;
         public Nuoli(Nuolenkärki kärkiOsa, Nuolensulka sulkaOsa, int pituusCm)
         {
-            this.kärkiOsa = kärkiOsa;
-            this.sulkaOsa = sulkaOsa;
-            this.pituusCm = pituusCm;
+            this.Kärkiosa = kärkiOsa;
+            this.Nuolensulka = sulkaOsa;
+            this.pituus = pituusCm;
         }
 
-        public Nuolenkärki GetKärkiosa()
+        public Nuolenkärki Kärkiosa
         {
-            return kärkiOsa;
+            get;
+            private set;
+           
         }
         
-        public Nuolensulka GetNuolensulka()
+        public Nuolensulka Nuolensulka
         {
-            return sulkaOsa;
+            get;
+            private set;
         }
-        public int Getpituus()
+
+        public int pituus
         {
-            return pituusCm;
+            get;
+            private set;
+           
         }
        
         public float Laskehinta()
         {
             float hinta = 0;
-            if(this.kärkiOsa == Nuolenkärki.puu)
+            if(this.Kärkiosa == Nuolenkärki.puu)
             {
                 hinta += 3;
             }
-            if (this.kärkiOsa == Nuolenkärki.teräs)
+            if (this.Kärkiosa == Nuolenkärki.teräs)
             {
                 hinta += 5;
             }
-            if (this.kärkiOsa == Nuolenkärki.timantti)
+            if (this.Kärkiosa == Nuolenkärki.timantti)
             {
                 hinta += 50;
             }
             
 
-            if(this.sulkaOsa == Nuolensulka.lehti)
+            if(this.Nuolensulka == Nuolensulka.lehti)
             {
                 hinta += 0;
             }
-            if (this.sulkaOsa == Nuolensulka.kanansulka)
+            if (this.Nuolensulka == Nuolensulka.kanansulka)
             {
                 hinta += 1;
             }
-            if (this.sulkaOsa == Nuolensulka.kotkansulka)
+            if (this.Nuolensulka == Nuolensulka.kotkansulka)
             {
                 hinta += 5;
             }
 
-            hinta += this.pituusCm * 0.05f;
+            hinta += this.pituus * 0.05f;
 
             return hinta;
         }
