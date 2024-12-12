@@ -1,69 +1,127 @@
-﻿namespace Nuoliteht
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace Nuoliteht
 {
     internal class Program
     {
         public static void Main(string[] args)
         {
             Program tehtävä = new Program();
-            tehtävä.Run();
+            tehtävä.Run();                               
         }
         public void Run()
         {
+            Valinta annettuVastaus;
+            bool suunnittelu = false;
             Console.WriteLine("Tervetuloa nuolikauppaan");
-            Nuolenkärki valittukärki;
-            Nuolensulka valittusulka;
-            int valittupituus = 0;
+            Console.WriteLine("Hei, haluatko ostaa: eliittinuoli, aloittelijanuoli, perusnuoli, vai suunnittelu.");
 
             while (true)
             {
-                Console.WriteLine("Millainen kärki? (puu, teräs, timantti)");
-                string kärkivastaus = Console.ReadLine();
-               if (Enum.TryParse<Nuolenkärki>(kärkivastaus, out valittukärki))
+               
+
+                string vastaus = Console.ReadLine();
+                if (Enum.TryParse<Valinta>(vastaus, out annettuVastaus))
                 {
+                    if(annettuVastaus == Valinta.eliittinuoli)
+                    {
+                        Nuoli eliititnuoli = Nuoli.LuoEliittiNuoli();
+                        Console.WriteLine("Ostit eliittinuolen jonka hinta on " + eliititnuoli.Laskehinta() + " kultaa"); 
+                        Console.WriteLine("nuolen kärki on " + eliititnuoli.Kärkiosa.ToString());
+                        Console.WriteLine("nuolen sulka on " + eliititnuoli.Nuolensulka.ToString());
+                        Console.WriteLine("nuolen pituus on " + eliititnuoli.pituus + "cm");
+                    }
+                    else if (annettuVastaus == Valinta.aloittelijanuoli)
+                    {
+                        Nuoli aloittelijan = Nuoli.LuoAloittelijaNuoli();
+                        Console.WriteLine("Ostit aloittelijanuolen jonka hinta on " + Nuoli.LuoAloittelijaNuoli().Laskehinta() + " kultaa");
+                        Console.WriteLine("nuolen kärki on " + aloittelijan.Kärkiosa.ToString());
+                        Console.WriteLine("nuolen sulka on " + aloittelijan.Nuolensulka.ToString());
+                        Console.WriteLine("nuolen pituus on " + aloittelijan.pituus);
+                    }
+                    else if (annettuVastaus == Valinta.perusnuoli)
+                    {
+                        Nuoli perus = Nuoli.LuoEliittiNuoli();
+                        Console.WriteLine("Ostit perusnuolen jonka hinta on " + Nuoli.LuoPerusNuoli().Laskehinta() + " kultaa");
+                        Console.WriteLine("nuolen kärki on " + perus.Kärkiosa.ToString());
+                        Console.WriteLine("nuolen sulka on " + perus.Nuolensulka.ToString());
+                        Console.WriteLine("nuolen pituus on " + perus.pituus);
+                    }
+
+                    else if (annettuVastaus == Valinta.suunnittelu)
+                    {
+                        suunnittelu = true;
+                    }
                     break;
                 }
-               else
-                {
-                    Console.WriteLine("En ymmärrä valintaasi");
+                    else
+                    {
+                    Console.WriteLine("En ymmärrä vastausta");
+                    }
                 }
-            }
 
-            while (true)
+
+            if (suunnittelu)
             {
-                Console.WriteLine("Minkälainen sulka? (lehti, kanansulka, kotkansulka)");
-                string sulkavastaus = Console.ReadLine();
-                if (Enum.TryParse<Nuolensulka>(sulkavastaus, out valittusulka))
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("En ymmärrä valintaasi");
-                }
-            }
 
-            while (true)
-            {
-                Console.WriteLine("Nuolen pituus senttimetreissä? (60-100)");
-                string pituusvastaus = Console.ReadLine();
+                
+                Nuolenkärki valittukärki;
+                Nuolensulka valittusulka;
+                int valittupituus = 0;
 
-                if (int.TryParse(pituusvastaus, out valittupituus))
+
+
+                while (true)
                 {
-                    if (valittupituus >= 60 && valittupituus <= 100)
+                    Console.WriteLine("Millainen kärki? (puu, teräs, timantti)");
+                    string kärkivastaus = Console.ReadLine();
+                    if (Enum.TryParse<Nuolenkärki>(kärkivastaus, out valittukärki))
                     {
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("Tämä ei ole mahdollinen");
+                        Console.WriteLine("En ymmärrä valintaasi");
                     }
                 }
+
+                while (true)
+                {
+                    Console.WriteLine("Minkälainen sulka? (lehti, kanansulka, kotkansulka)");
+                    string sulkavastaus = Console.ReadLine();
+                    if (Enum.TryParse<Nuolensulka>(sulkavastaus, out valittusulka))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("En ymmärrä valintaasi");
+                    }
+                }
+
+                while (true)
+                {
+                    Console.WriteLine("Nuolen pituus senttimetreissä? (60-100)");
+                    string pituusvastaus = Console.ReadLine();
+
+                    if (int.TryParse(pituusvastaus, out valittupituus))
+                    {
+                        if (valittupituus >= 60 && valittupituus <= 100)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Tämä ei ole mahdollinen");
+                        }
+                    }
+                }
+                Nuoli uusinuoli = new Nuoli(valittukärki, valittusulka, valittupituus);
+                Console.WriteLine("Ostit nuolen jonka hinta on " + uusinuoli.Laskehinta() + " kultaa");
+                Console.WriteLine("nuolen kärki on " + uusinuoli.Kärkiosa);
+                Console.WriteLine("nuolen sulka on " + uusinuoli.Nuolensulka);
+                Console.WriteLine("nuolen pituus on " + uusinuoli.pituus + "cm");
             }
-            Nuoli uusinuoli = new Nuoli(valittukärki, valittusulka, valittupituus);
-            Console.WriteLine("Ostit nuolen jonka hinta on " + uusinuoli.Laskehinta()+ " kultaa");
-            Console.WriteLine("nuolen kärki on " + uusinuoli.Kärkiosa);
-            Console.WriteLine("nuolen sulka on " + uusinuoli.Nuolensulka);
-            Console.WriteLine("nuolen pituus on " + uusinuoli.pituus);
         }
     }
 
@@ -80,6 +138,14 @@
         kanansulka,
         kotkansulka
     }
+    public enum Valinta
+    {
+        eliittinuoli, 
+        aloittelijanuoli, 
+        perusnuoli,
+        suunnittelu
+    }
+
 
     public class Nuoli
     {
@@ -144,5 +210,21 @@
 
             return hinta;
         }
+        public static Nuoli LuoEliittiNuoli()
+        {
+            Nuoli eliittiNuoli = new Nuoli(Nuolenkärki.timantti, Nuolensulka.kotkansulka, 100);
+            return eliittiNuoli;
+        }
+        public static Nuoli LuoAloittelijaNuoli()
+        {
+            Nuoli aloittelijaNuoli = new Nuoli(Nuolenkärki.puu, Nuolensulka.kanansulka, 70);
+            return aloittelijaNuoli;
+        }
+        public static Nuoli LuoPerusNuoli()
+        {
+            Nuoli perusNuoli = new Nuoli(Nuolenkärki.teräs, Nuolensulka.kanansulka, 85);
+            return perusNuoli;
+        }
+
     }
 }
